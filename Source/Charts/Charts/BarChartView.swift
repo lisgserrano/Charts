@@ -17,6 +17,10 @@ open class BarChartView: BarLineChartViewBase, BarChartDataProvider
 {
     /// if set to true, all values are drawn above their bars, instead of below their top
     private var _drawValueAboveBarEnabled = true
+    
+    @objc open var roundCornerEnabled: Bool = true
+    
+    open var isRoundCornerEnabled: Bool { return roundCornerEnabled }
 
     /// if set to true, a grey area is drawn behind each bar that indicates the maximum value
     private var _drawBarShadowEnabled = false
