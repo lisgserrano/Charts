@@ -694,12 +694,13 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                             }
                             
                             trans.pointValuesToPixel(&transformed)
-                            
-                            for k in 0 ..< transformed.count
-                            {
-                                let val = vals[k]
+                            //This lines were commented to draw the total value of the stacked bars at the top,
+                            //instead to draw each value for each dataset in the bar.
+                            //  for k in 0 ..< transformed.count
+                            //  {
+                                let val = vals.reduce(0, +)  //vals[k]
                                 let drawBelow = (val == 0.0 && negY == 0.0 && posY > 0.0) || val < 0.0
-                                let y = transformed[k].y + (drawBelow ? negOffset : posOffset)
+                                let y = transformed.last!.y + negOffset //(drawBelow ? negOffset : posOffset)
                                 
                                 if !viewPortHandler.isInBoundsRight(x)
                                 {
@@ -716,7 +717,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                     drawValue(
                                         context: context,
                                         value: formatter.stringForValue(
-                                            vals[k],
+                                            val,
                                             entry: e,
                                             dataSetIndex: dataSetIndex,
                                             viewPortHandler: viewPortHandler),
@@ -736,7 +737,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                         y: y + iconsOffset.y,
                                         size: icon.size)
                                 }
-                            }
+                           // }
                         }
                         
                         bufferIndex = vals == nil ? (bufferIndex + 1) : (bufferIndex + vals!.count)
